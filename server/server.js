@@ -11,8 +11,7 @@ async function readData() {
             console.log(err)
         } else {
             try {
-                readDataFile = await JSON.parse(jsonData)
-                return readDataFile;
+                let data = await JSON.parse(jsonData)
             } catch {
                 console.log('error parsing data', err)
             }
@@ -28,7 +27,6 @@ app.delete("/api/data/delete/:id", bodyParser.json(), async (req, res) => {
         } else {
             try {
                let data = await JSON.parse(jsonData)
-                console.log(data)
                 let filteredData = data.filter(item => {
                    return item.id != id;
                 })
@@ -43,19 +41,29 @@ app.delete("/api/data/delete/:id", bodyParser.json(), async (req, res) => {
     })
 })
 
-// დაას დააფდეითება
-// fs.writeFileSync('./data.json', JSON.stringify('რაღაც ახალი დათა'));
+app.put("/api/data/addElement", bodyParser.json(), async (req, res) => {
+    const element = req.body
+    fs.readFile('./data.json', 'utf-8', async (err, jsonData) => {
+        if (err) {
+            console.log(err)
+        } else {
+            try {
+               let data = await JSON.parse(jsonData)
+                data.push(element)
+                res.json({
+                    "data": data
+                })
+                fs.writeFileSync('./data.json', JSON.stringify(data));
+            } catch {
+                console.log('error parsing data', err)
+            }
+        }
+    })
+})
 
 app.get("/api/data", (req, res) => {
     res.json({
         "data": data
     })
 })
-
-// app.post("/api/data", bodyParser.json(), (req, res) => {
-//     const data = req.body
-//     fs.writeFileSync('./data.json', JSON.stringify(data));
-//     readData(res)
-// })
-
 app.listen(3500, () => { console.log("server started on port 3500") })
