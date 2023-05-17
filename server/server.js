@@ -43,6 +43,7 @@ app.delete("/api/data/delete/:id", bodyParser.json(), async (req, res) => {
 
 app.put("/api/data/addElement", bodyParser.json(), async (req, res) => {
     const element = req.body
+    console.log(element)
     fs.readFile('./data.json', 'utf-8', async (err, jsonData) => {
         if (err) {
             console.log(err)

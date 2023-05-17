@@ -3,6 +3,7 @@ import './App.css';
 import axios from 'axios';
 import useStore from './store';
 import DataList from './components/list';
+import ModalWindow from './components/addModal';
 
 function App() {
   
@@ -24,6 +25,7 @@ function App() {
 
   return (
     <>
+      <ModalWindow />
       <DataList />
     </>
   );
