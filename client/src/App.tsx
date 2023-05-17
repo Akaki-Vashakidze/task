@@ -13,21 +13,6 @@ function App() {
     getData()
   },[])
 
-
-  axios.post('api/data',data)
-  .then(res => {
-    console.log(res)
-  })
-  .catch(err => {
-    console.log(err)
-  })
-
-
-  const onDataChange = () => {
-  // console.log('data changed')
-  // console.log(data)
-  }
-
   const getData = () => {
     axios.get('api/data')
     .then(res => {
@@ -39,9 +24,8 @@ function App() {
 
   return (
     <>
-      <DataList onDataChange = {onDataChange} />
+      <DataList />
     </>
-
   );
 }
 

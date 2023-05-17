@@ -1,6 +1,7 @@
 import React from 'react';
 import { Space, Table, Tag } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
+import axios from 'axios';
 import useStore from '../store';
 import {PlusCircleOutlined,EditOutlined,DeleteOutlined} from '@ant-design/icons'
 
@@ -14,15 +15,23 @@ interface DataType {
   key:number | string;
 }
 
-function DataList (props:any) {
+function DataList () {
 
   const data: DataType[] = useStore((state) => state.data)
-  const deleteElement = useStore((state) => state.deleteElement)
+  const updateData =  useStore((state) => state.loadData)
 
-  const deleteRow = (id:string) => {
-    deleteElement(id)
-    props.onDataChange()
+  const deleteRow = async (id:string) => {
+    console.log(id)
+    axios.delete('/api/data/delete/' + id)
+    .then(res => {
+      console.log(res)
+      updateData(res.data.data)
+    })
+    .catch(err => {
+      console.log(err)
+    })
   } 
+
 
 const columns: ColumnsType<DataType> = [
   {
