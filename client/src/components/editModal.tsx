@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Button, Modal, Checkbox, Form, Input } from 'antd';
 import { PlusCircleOutlined } from '@ant-design/icons'
 
-const EditModalWindow: React.FC = () => {
+const ModalWindow: React.FC = () => {
     const [open, setOpen] = useState(false);
     const [confirmLoading, setConfirmLoading] = useState(false);
     const [form] = Form.useForm();
@@ -10,6 +10,22 @@ const EditModalWindow: React.FC = () => {
     const showModal = () => {
         setOpen(true);
     };
+
+      // const onGenderChange = (value: string) => {
+    //     switch (value) {
+    //         case 'male':
+    //             form.setFieldsValue({ note: 'Hi, man!' });
+    //             break;
+    //         case 'female':
+    //             form.setFieldsValue({ note: 'Hi, lady!' });
+    //             break;
+    //         case 'other':
+    //             form.setFieldsValue({ note: 'Hi there!' });
+    //             break;
+    //         default:
+    //     }
+    // };
+
 
     // useEffect(()=>{
     //     form.setFieldValue({
@@ -75,4 +91,4 @@ const EditModalWindow: React.FC = () => {
     );
 };
 
-export default EditModalWindow;
+export default ModalWindow;

@@ -90,7 +90,17 @@ function DataList() {
 
   return (
     <>
-      <Table columns={columns} dataSource={data} />
+      <Table       
+        onRow={(record) => {
+          return {
+            onDoubleClick: () => {
+              console.log(record)
+              // setActiveRecord(record);
+              // setIsModalVisible(true);
+            },
+          };
+        }}
+ columns={columns} dataSource={data} />
     </>
   )
 }
