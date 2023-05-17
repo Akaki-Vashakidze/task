@@ -1,68 +1,65 @@
-import React, { useEffect, useState} from 'react';
-import { Button, Modal, Form, Input , Select} from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Button, Modal, Form, Input, Select } from 'antd';
 import axios from 'axios';
 import useStore from '../store';
 
 const { Option } = Select;
 
-const EditModalWindow = (props:any) => {
+const EditModalWindow = (props: any) => {
     const [open, setOpen] = useState(false);
     const [confirmLoading, setConfirmLoading] = useState(false);
     const [form] = Form.useForm();
     const updateData = useStore((state) => state.loadData)
-    
+
     const showModal = () => {
         setOpen(true);
     };
 
-      useEffect(()=> {
-        if(props.openEditModal > 0) {
+    useEffect(() => {
+        if (props.openEditModal > 0) {
             showModal()
-            form.setFieldsValue({ name: props.openEditModalData.name, email: props.openEditModalData.email, phone: props.openEditModalData.phone, gender: props.openEditModalData.gender, city: props.openEditModalData.address.city, street: props.openEditModalData.address.street,  });
-        } 
-      },[JSON.stringify(props.openEditModal)])
-  
+            form.setFieldsValue({ name: props.openEditModalData.name, email: props.openEditModalData.email, phone: props.openEditModalData.phone, gender: props.openEditModalData.gender, city: props.openEditModalData.address.city, street: props.openEditModalData.address.street, });
+        }
+    }, [JSON.stringify(props.openEditModal)])
+
     const handleCancel = () => {
-        console.log('Clicked cancel button');
         setOpen(false);
     };
-    
-    const handleOk = (data:any) => {
+
+    const handleOk = (data: any) => {
         console.log(data)
         console.log(props.openEditModalData.id)
         let editedData = {
             // considering it as a unique number id
-            id:Math.random(),
-            name:data.name,
-            email:data.email,
-            address:{"city":data.city, "street":data.street},
-            phone:data.phone,
-            gender:data.gender,
+            id: Math.random(),
+            name: data.name,
+            email: data.email,
+            address: { "city": data.city, "street": data.street },
+            phone: data.phone,
+            gender: data.gender,
         }
 
-        axios.put('/api/data/editElement',{id:props.openEditModalData.id,editedData})
+        axios.put('/api/data/editElement', { id: props.openEditModalData.id, editedData })
             .then(res => {
-                console.log(res)
                 updateData(res.data.data)
                 setOpen(false);
             })
             .catch(err => {
                 console.log(err)
             })
-        // setOpen(false);
     };
 
     return (
         <>
             <Modal
-                title="დამატება"
+                title="რედაქტირება"
                 open={open}
-                onOk={()=>{
+                onOk={() => {
                     handleOk(form.getFieldsValue())
                 }}
                 confirmLoading={confirmLoading}
                 onCancel={handleCancel}
-                okText="დამატება"
+                okText="რედაქტირება"
                 cancelText="უკან დაბრუნება"
             >
                 <Form
@@ -74,7 +71,7 @@ const EditModalWindow = (props:any) => {
                     initialValues={{ remember: true }}
                 >
 
-<Form.Item
+                    <Form.Item
                         label="Name"
                         name="name"
                         rules={[{ required: true, message: 'Please input your name!' }]}
@@ -124,10 +121,6 @@ const EditModalWindow = (props:any) => {
                     >
                         <Input />
                     </Form.Item>
-
-
-
-
                 </Form>
             </Modal>
         </>

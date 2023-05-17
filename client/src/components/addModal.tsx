@@ -17,23 +17,22 @@ function AddModalWindow() {
     };
 
     const handleCancel = () => {
-        console.log('Clicked cancel button');
         setOpen(false);
     };
 
     const handleOk = (formValue: any) => {
         console.log(formValue)
-       let newData = {
+        let newData = {
             // considering it as a unique number id
-            id:Math.random(),
-            name:formValue.name,
-            email:formValue.email,
-            address:{"city":formValue.city, "street":formValue.street},
-            phone:formValue.phone,
-            gender:formValue.gender,
+            id: Math.random(),
+            name: formValue.name,
+            email: formValue.email,
+            address: { "city": formValue.city, "street": formValue.street },
+            phone: formValue.phone,
+            gender: formValue.gender,
         }
 
-        axios.put('/api/data/addElement',newData)
+        axios.put('/api/data/addElement', newData)
             .then(res => {
                 console.log(res)
                 updateData(res.data.data)
@@ -42,8 +41,6 @@ function AddModalWindow() {
             .catch(err => {
                 console.log(err)
             })
-
-        // setOpen(false);
     };
 
     const onFinishFailed = (errorInfo: any) => {
@@ -127,9 +124,6 @@ function AddModalWindow() {
                     >
                         <Input />
                     </Form.Item>
-
-
-
                 </Form>
             </Modal>
         </>
