@@ -3,7 +3,7 @@ import { Space, Table, Tag } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import axios from 'axios';
 import useStore from '../store';
-import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
+import { DeleteOutlined } from '@ant-design/icons'
 
 interface DataType {
   id: number;
@@ -15,7 +15,7 @@ interface DataType {
   key: number | string;
 }
 
-function DataList() {
+function DataList(props: any) {
 
   const data: DataType[] = useStore((state) => state.data)
   const updateData = useStore((state) => state.loadData)
@@ -31,7 +31,6 @@ function DataList() {
         console.log(err)
       })
   }
-
 
   const columns: ColumnsType<DataType> = [
     {
@@ -75,7 +74,6 @@ function DataList() {
       render: (id) => {
         return (
           <div>
-            <EditOutlined className='icon' />
             <DeleteOutlined
               className='icon'
               style={{ color: 'red', marginLeft: 12 }}
@@ -90,17 +88,15 @@ function DataList() {
 
   return (
     <>
-      <Table       
+      <Table
         onRow={(record) => {
           return {
             onDoubleClick: () => {
-              console.log(record)
-              // setActiveRecord(record);
-              // setIsModalVisible(true);
+              props.triggerEditModal(record);
             },
           };
         }}
- columns={columns} dataSource={data} />
+        columns={columns} dataSource={data} />
     </>
   )
 }

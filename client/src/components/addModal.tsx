@@ -6,7 +6,7 @@ import useStore from '../store';
 
 const { Option } = Select;
 
-function ModalWindow() {
+function AddModalWindow() {
     const [open, setOpen] = useState(false);
     const [confirmLoading, setConfirmLoading] = useState(false);
     const [form] = Form.useForm();
@@ -49,22 +49,6 @@ function ModalWindow() {
     const onFinishFailed = (errorInfo: any) => {
         console.log('Failed:', errorInfo);
     };
-
-
-    // const onGenderChange = (value: string) => {
-    //     switch (value) {
-    //         case 'male':
-    //             form.setFieldsValue({ note: 'Hi, man!' });
-    //             break;
-    //         case 'female':
-    //             form.setFieldsValue({ note: 'Hi, lady!' });
-    //             break;
-    //         case 'other':
-    //             form.setFieldsValue({ note: 'Hi there!' });
-    //             break;
-    //         default:
-    //     }
-    // };
 
     return (
         <>
@@ -128,7 +112,6 @@ function ModalWindow() {
                     <Form.Item name="gender" label="Gender" rules={[{ required: true }]}>
                         <Select
                             placeholder="Select a option and change input text above"
-                            // onChange={onGenderChange}
                             allowClear
                         >
                             <Option value="male">male</Option>
@@ -153,4 +136,4 @@ function ModalWindow() {
     );
 };
 
-export default ModalWindow;
+export default AddModalWindow;

@@ -3,12 +3,21 @@ import './App.css';
 import axios from 'axios';
 import useStore from './store';
 import DataList from './components/list';
-import ModalWindow from './components/addModal';
+import AddModalWindow from './components/addModal';
+import EditModalWindow from './components/editModal';
 
 function App() {
   
   const data = useStore((state) => state.data)
   const saveServerData = useStore((state) => state.loadData)
+  const [openEditModal,setOpenEditModal] = useState(0)
+  const [openEditModalData,setOpenEditModalData] = useState('')
+  
+
+ const triggerEditModal = (data:any) => {
+  setOpenEditModalData(data)
+  setOpenEditModal(openEditModal + 1)
+ }
 
   useEffect(()=> {
     getData()
@@ -25,8 +34,9 @@ function App() {
 
   return (
     <>
-      <ModalWindow />
-      <DataList />
+      <EditModalWindow openEditModalData={openEditModalData} openEditModal={openEditModal}/>
+      <AddModalWindow />
+      <DataList triggerEditModal={triggerEditModal} />
     </>
   );
 }

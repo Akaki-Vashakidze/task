@@ -62,6 +62,32 @@ app.put("/api/data/addElement", bodyParser.json(), async (req, res) => {
     })
 })
 
+app.put("/api/data/editElement", bodyParser.json(), async (req, res) => {
+    const element = req.body.editedData
+    const id = req.body.id
+    fs.readFile('./data.json', 'utf-8', async (err, jsonData) => {
+        if (err) {
+            console.log(err)
+        } else {
+             try {
+                   let data = await JSON.parse(jsonData)
+                   for(let i = 0; i< data.length; i++) {
+                    if(data[i].id == id) {
+                        data.splice(i, 1)
+                        data.splice(i,0,element)
+                    }
+                   }
+                res.json({
+                    "data": data
+                })
+                fs.writeFileSync('./data.json', JSON.stringify(data));
+            } catch {
+                console.log('error parsing data', err)
+            }
+        }
+    })
+})
+
 app.get("/api/data", (req, res) => {
     res.json({
         "data": data
